@@ -16,6 +16,7 @@ RUN apt-get update \
     && echo 'kasm-user ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers \
     && rm -rf /var/lib/apt/list/*
 
+RUN sudo apt-get install -y bloodhound
 
 ######### End Customizations ###########
 
