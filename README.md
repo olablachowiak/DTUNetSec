@@ -81,8 +81,10 @@ User : `kasm_user`
 
 Password: `password`
 
-### Uninstall docker
-To completely remove docker from your system (don't do if you want to run kali), run the following commands:
+### Uninstall docker (FYI)
+Don't execute the following commands if you want to run kali
+
+If you want to completely remove docker from your system, run the following commands:
 ```sh
 dkg -l | grep -i docker
 sudo apt purge docker-buildx-plugin docker-ce docker-ce-cli docker-compose-plugin containerd.io
