@@ -8,7 +8,7 @@ For the kali environment, open `https://localhost:6901/` in your browser, and co
 
 ```sh
 User : kasm_user
-Password: password
+Password : password
 ```
 
 To use `bloodhound`, you have to start the `neo4j` service:
@@ -79,7 +79,7 @@ For the Kali environment, open `https://localhost:6901/` in your browser, and co
 
 User : `kasm_user`
 
-Password: `password`
+Password : `password`
 
 ### Uninstall docker (FYI)
 Don't execute the following commands if you want to run kali
