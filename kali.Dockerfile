@@ -12,11 +12,9 @@ RUN mkdir material
 COPY material material
 
 RUN apt-get update \
-    && apt-get install -y sudo \
+    && apt-get install -y sudo bloodhound \
     && echo 'kasm-user ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers \
-    && rm -rf /var/lib/apt/list/*
-
-RUN sudo apt-get install -y bloodhound
+    && rm -rf /var/lib/apt/lists/*
 
 ######### End Customizations ###########
 
