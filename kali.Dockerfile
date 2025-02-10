@@ -11,10 +11,26 @@ WORKDIR $HOME
 RUN mkdir material
 COPY material material
 
-RUN apt-get update \
-    && apt-get install -y sudo bloodhound \
+RUN apt -y update \
+    && apt install -y sudo bloodhound \
     && echo 'kasm-user ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/
+
+RUN apt -y update \
+    && apt install -y --fix-broken \ 
+    && apt -y install build-essential libssl-dev libffi-dev python3-dev python3-pip python3-virtualenv git evil-winrm\
+    && git clone --depth 1 https://github.com/SecureAuthCorp/impacket \
+    && cd impacket/examples \
+    && git clone --depth 1 https://github.com/VoidSec/CVE-2020-1472 \
+    && chmod +x CVE-2020-1472/cve-2020-1472-exploit.py \
+    && cd .. \
+    && pwd ~/impacket/ \
+    && virtualenv --python=python3 impacket \
+    && . impacket/bin/activate \
+    && pip install --upgrade pip \
+    && pip install . \
+    && cd examples/CVE-2020-1472 \
+    && pip install -r requirements.txt
 
 ######### End Customizations ###########
 
