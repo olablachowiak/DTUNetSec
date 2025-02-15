@@ -13,11 +13,26 @@ services:
       - NET_ADMIN
       - NET_RAW
 
+  # Used for the "4 - Threat Detection" lab
+  defender:
+    build:
+      context: ./material/4-Threat_Detection
+      dockerfile: Dockerfile
+    ports:
+    # One is ssh service the other is a simple http server
+      - "2223:22"
+      - "8081:8080"
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+
   cowrie:
     image: cowrie/cowrie
     ports:
       - "2222:2222"
 
+  # Used for the "11 - Red team" lab
   juice-shop:
     image: bkimminich/juice-shop
     ports:

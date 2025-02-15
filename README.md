@@ -2,6 +2,9 @@
 
 Here you can find a `docker-compose` file to start all the required services and applications we are going to use throughout the Network Security course and its laboratory exercises.
 
+## Repository Structure
+
+
 ## Requirements
 
 Before cloning the repository and setting up the services, make sure you have the following tools installed: 
