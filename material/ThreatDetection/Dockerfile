@@ -9,7 +9,8 @@ RUN apk update && apk add --no-cache \
 
 EXPOSE 22 8080
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN /usr/sbin/sshd -D &
 
-CMD ["/entrypoint.sh"]
+WORKDIR /var/www
+
+CMD ["python3", "-m", "http.server", "8080"]
