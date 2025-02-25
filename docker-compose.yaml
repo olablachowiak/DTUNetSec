@@ -16,7 +16,7 @@ services:
   # Used for the "4 - Threat Detection" lab
   defender:
     build:
-      context: ./material/4-Threat_Detection
+      context: ./material/ThreatDetection
       dockerfile: Dockerfile
     ports:
     # One is ssh service the other is a simple http server
