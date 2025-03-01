@@ -2,7 +2,7 @@
 services:
   kali:
     build:
-      context: .
+      context: ./kali
       dockerfile: kali.Dockerfile
       shm_size: "512m"
     ports:
@@ -13,15 +13,13 @@ services:
       - NET_ADMIN
       - NET_RAW
 
-  # Used for the "4 - Threat Detection" lab
   defender:
     build:
-      context: ./material/ThreatDetection
-      dockerfile: Dockerfile
+      dockerfile: defender.Dockerfile
+      shm_size: "512m"
     ports:
-    # One is ssh service the other is a simple http server
       - "2223:22"
-      - "8081:8080"
+      - "8080:80"
     privileged: true
     cap_add:
       - NET_ADMIN
