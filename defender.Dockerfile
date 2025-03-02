@@ -1,12 +1,16 @@
-FROM alpine:3.11
+FROM alpine:3.15
 
-RUN apk update --update-cache && \
-  apk add --no-cache \
+RUN apk update --update-cache
+RUN apk add --no-cache \
+  curl \
+  tar \
+  libc6-compat \
   bash \
   sudo \
-  # IP stuff
+  # Security tools
   iputils \
   iptables \
+  suricata \
   # SSH
   openssh \
   openssh-server \
@@ -14,7 +18,13 @@ RUN apk update --update-cache && \
   apache2 \
   php php-apache2 php-common php-session \
   # Supervisor
-  supervisor  
+  supervisor \
+  && rm -rf /var/cache/apk/*
+
+RUN curl -L https://github.com/CISOfy/lynis/archive/refs/heads/master.tar.gz -o lynis.tar.gz && \
+  tar -xzvf lynis.tar.gz && \
+  mv lynis-master /opt/lynis && \
+  rm lynis.tar.gz
 
 RUN ssh-keygen -A && \
   adduser -D defender && \
