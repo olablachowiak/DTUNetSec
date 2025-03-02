@@ -1,9 +1,7 @@
 ---
 services:
   kali:
-    build:
-      dockerfile: kali.Dockerfile
-      shm_size: "512m"
+    image: ryaben/kali-dtunetsec:latest
     ports:
       - "6901:6901"
     environment:
@@ -13,9 +11,7 @@ services:
       - NET_RAW
 
   defender:
-    build:
-      dockerfile: defender.Dockerfile
-      shm_size: "512m"
+    image: ryaben/defender-dtunetsec:latest
     ports:
       - "2223:22"
       - "8080:80"
