@@ -2,7 +2,6 @@
 services:
   kali:
     build:
-      context: ./kali
       dockerfile: kali.Dockerfile
       shm_size: "512m"
     ports:
