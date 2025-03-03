@@ -2,6 +2,7 @@
 services:
   kali:
     image: ryaben/kali-dtunetsec:latest
+    platform: linux/amd64
     ports:
       - "6901:6901"
     environment:
@@ -12,6 +13,7 @@ services:
 
   defender:
     image: ryaben/defender-dtunetsec:latest
+    platform: linux/amd64
     ports:
       - "2223:22"
       - "8080:80"
