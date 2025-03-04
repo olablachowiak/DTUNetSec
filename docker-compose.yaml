@@ -12,6 +12,7 @@ services:
     cap_add:
       - NET_ADMIN
       - NET_RAW
+    restart: always
 
   # Used for the "4 - Threat Detection" lab
   defender:
