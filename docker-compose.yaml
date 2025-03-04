@@ -1,10 +1,8 @@
 ---
 services:
   kali:
-    build:
-      context: .
-      dockerfile: kali.Dockerfile
-      shm_size: "512m"
+    image: ryaben/kali-dtunetsec:latest
+    platform: linux/amd64
     ports:
       - "6901:6901"
     environment:
@@ -14,15 +12,12 @@ services:
       - NET_RAW
     restart: always
 
-  # Used for the "4 - Threat Detection" lab
   defender:
-    build:
-      context: ./material/ThreatDetection
-      dockerfile: Dockerfile
+    image: ryaben/defender-dtunetsec:latest
+    platform: linux/amd64
     ports:
-    # One is ssh service the other is a simple http server
       - "2223:22"
-      - "8081:8080"
+      - "8080:80"
     privileged: true
     cap_add:
       - NET_ADMIN

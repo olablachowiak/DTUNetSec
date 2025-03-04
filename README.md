@@ -29,6 +29,10 @@ Then, compose up the containers from the root directory of the project.
 docker compose up --build -d
 ```
 
+> NOTE: If you are using a Macbook, you may need to use the following command instead:
+>
+> `DOCKER_DEFAULT_PLATFORM=linux/amd64 docker compose up --build -d`
+
 ### Check containers health
 
 To check the health of your containers, do:
