@@ -1,4 +1,4 @@
-FROM alpine:3.15
+FROM alpine:latest
 
 RUN apk update --update-cache
 RUN apk add --no-cache \
@@ -7,6 +7,7 @@ RUN apk add --no-cache \
   libc6-compat \
   bash \
   sudo \
+  netcat-openbsd \
   # Security tools
   iputils \
   iptables \
@@ -32,7 +33,7 @@ RUN ssh-keygen -A && \
 
 # HTTP
 ADD defender/httpd/ /var/www/localhost/htdocs/
-RUN echo "LoadModule php7_module modules/mod_php7.so" >> /etc/apache2/httpd.conf
+RUN echo "LoadModule php_module modules/mod_php8.so" >> /etc/apache2/httpd.conf
 RUN echo "AddHandler php-script .php" >> /etc/apache2/httpd.conf
 RUN sed -i 's/DirectoryIndex index.html/DirectoryIndex index.php index.html/' /etc/apache2/httpd.conf
 RUN chmod 755 /var/www/localhost/htdocs/
