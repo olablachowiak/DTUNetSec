@@ -4,7 +4,8 @@ services:
     image: ryaben/kali-dtunetsec:latest
     platform: linux/amd64
     ports:
-      - "6901:6901"
+      - "127.0.0.1:6901:6901"
+      - "127.0.0.1:1443:1443"
     environment:
       VNC_PW: "password"
     cap_add:
@@ -14,9 +15,10 @@ services:
   defender:
     image: ryaben/defender-dtunetsec:latest
     platform: linux/amd64
+    profiles: [threat-detection, blue-team]
     ports:
-      - "2223:22"
-      - "8080:80"
+      - "127.0.0.1:2223:22"
+      - "127.0.0.1:8080:80"
     privileged: true
     cap_add:
       - NET_ADMIN
@@ -24,11 +26,13 @@ services:
 
   cowrie:
     image: cowrie/cowrie
+    profiles: [threat-detection]
     ports:
-      - "2222:2222"
+      - "127.0.0.1:2222:2222"
 
   # Used for the "11 - Red team" lab
   juice-shop:
     image: bkimminich/juice-shop
+    profiles: [red-team]
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
