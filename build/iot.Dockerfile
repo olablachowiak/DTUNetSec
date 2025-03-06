@@ -26,9 +26,8 @@ RUN ssh-keygen -A && \
   adduser -D iot && \
   echo "iot:iot" | chpasswd
 
-
-
-
+# Mosquitto
+ADD iot/mosquitto/mosquitto.conf /var/conf/mosquitto.conf
 
 
 # Supervisor
