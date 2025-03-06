@@ -12,7 +12,7 @@ RUN apt update && apt install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* /tmp/*
 
 # Copy material
-COPY --chown=1000:0 kali/material material
+COPY --chown=1000:0 containers/kali/material material
 RUN tar -xzvf material/2-Authentication/impacket-cve-2020-1472.tar.gz -C material/2-Authentication/ \
     && rm material/2-Authentication/impacket-cve-2020-1472.tar.gz
 

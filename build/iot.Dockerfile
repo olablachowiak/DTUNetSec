@@ -25,7 +25,7 @@ RUN ssh-keygen -A && \
   echo "iot:iot" | chpasswd
 
 # Mosquitto
-ADD iot/mosquitto/mosquitto.conf /var/conf/mosquitto.conf
+ADD containers/iot/mosquitto/mosquitto.conf /var/conf/mosquitto.conf
 
 
 # Supervisor
@@ -33,7 +33,7 @@ RUN mkdir -p /etc/supervisor/conf.d
 RUN /usr/bin/echo_supervisord_conf > /etc/supervisor/supervisord.conf
 RUN sed -i -e "s/^nodaemon=false/nodaemon=true/" /etc/supervisor/supervisord.conf
 
-ADD iot/supervisor/ /etc/supervisor/conf.d/
+ADD containers/iot/supervisor/ /etc/supervisor/conf.d/
 RUN echo "[include]" >> /etc/supervisor/supervisord.conf
 RUN echo "files=/etc/supervisor/conf.d/*.conf" >> /etc/supervisor/supervisord.conf
 
