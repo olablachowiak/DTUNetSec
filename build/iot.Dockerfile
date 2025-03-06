@@ -24,6 +24,8 @@ RUN apk add vsftpd && \
   cp /etc/vsftpd.conf /etc/vsftpd.conf.orig && \
   mkdir /srv/ftp
 
+COPY --chown=ftp:ftp containers/iot/vsftpd/flag.txt /srv/ftp/ftp_flag.txt
+
 # SSH
 RUN ssh-keygen -A && \
   adduser -D iot && \
