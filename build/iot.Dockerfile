@@ -11,13 +11,18 @@ RUN apk add --no-cache \
     # SSH
     openssh \
     openssh-server \
-    # FTP
-    lftp \
     # IPP
     cups \
     # Supervisor
     supervisor \
     && rm -rf /var/cache/apk/*
+
+# FTP 
+COPY containers/iot/vsftpd/vsftpd.conf /etc/vsftpd.conf
+RUN apk add vsftpd && \
+  sed -i 's,\r,,;s, *$,,' /etc/vsftpd.conf && \
+  cp /etc/vsftpd.conf /etc/vsftpd.conf.orig && \
+  mkdir /srv/ftp
 
 # SSH
 RUN ssh-keygen -A && \
