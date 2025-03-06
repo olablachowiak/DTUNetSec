@@ -14,7 +14,7 @@ RUN apk add --no-cache \
     # FTP
     lftp \
     # IPP
-    ipptool \
+    cups \
     # Supervisor
     supervisor \
     && rm -rf /var/cache/apk/*
@@ -27,6 +27,10 @@ RUN ssh-keygen -A && \
 # Mosquitto
 ADD containers/iot/mosquitto/mosquitto.conf /var/conf/mosquitto.conf
 
+# CUPS
+COPY containers/iot/cups/cupsd.conf /etc/cups/cupsd.conf
+RUN sed -i 's/^#FileDevice No/FileDevice Yes/' /etc/cups/cups-files.conf
+
 
 # Supervisor
 RUN mkdir -p /etc/supervisor/conf.d
@@ -36,5 +40,8 @@ RUN sed -i -e "s/^nodaemon=false/nodaemon=true/" /etc/supervisor/supervisord.con
 ADD containers/iot/supervisor/ /etc/supervisor/conf.d/
 RUN echo "[include]" >> /etc/supervisor/supervisord.conf
 RUN echo "files=/etc/supervisor/conf.d/*.conf" >> /etc/supervisor/supervisord.conf
+
+COPY containers/iot/post.sh /post.sh
+RUN chmod +x /post.sh
 
 ENTRYPOINT ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
