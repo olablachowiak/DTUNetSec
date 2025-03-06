@@ -15,8 +15,6 @@ RUN apk add --no-cache \
     lftp \
     # IPP
     ipptool \
-    # RTSP
-    gst-rtsp-server \
     # Supervisor
     supervisor \
     && rm -rf /var/cache/apk/*
