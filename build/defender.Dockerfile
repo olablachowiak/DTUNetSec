@@ -32,7 +32,7 @@ RUN ssh-keygen -A && \
   echo "defender:defender" | chpasswd
 
 # HTTP
-ADD defender/httpd/ /var/www/localhost/htdocs/
+ADD containers/defender/httpd/ /var/www/localhost/htdocs/
 RUN echo "LoadModule php_module modules/mod_php8.so" >> /etc/apache2/httpd.conf
 RUN echo "AddHandler php-script .php" >> /etc/apache2/httpd.conf
 RUN sed -i 's/DirectoryIndex index.html/DirectoryIndex index.php index.html/' /etc/apache2/httpd.conf
@@ -43,7 +43,7 @@ RUN mkdir -p /etc/supervisor/conf.d
 RUN /usr/bin/echo_supervisord_conf > /etc/supervisor/supervisord.conf
 RUN sed -i -e "s/^nodaemon=false/nodaemon=true/" /etc/supervisor/supervisord.conf
 
-ADD defender/supervisor/ /etc/supervisor/conf.d/
+ADD containers/defender/supervisor/ /etc/supervisor/conf.d/
 RUN echo "[include]" >> /etc/supervisor/supervisord.conf
 RUN echo "files=/etc/supervisor/conf.d/*.conf" >> /etc/supervisor/supervisord.conf
 
