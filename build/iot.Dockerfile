@@ -1,46 +1,57 @@
 FROM alpine:latest
 
-RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-RUN apk update --update-cache
+RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
+    apk update --update-cache
+
 RUN apk add --no-cache \
     sudo \
     bash \
+    # MQTT
     mosquitto \
+    # CoAP
     libcoap \
+    # SSH
     openssh \
     openssh-server \
-    lftp \
-    ipptool \
-    gst-rtsp-server \
+    # IPP
+    cups \
+    # FTP
+    vsftpd \
+    # Supervisor
     supervisor \
     && rm -rf /var/cache/apk/*
 
-# Creating anonymous user
+USER root
+
+# SSH
 RUN ssh-keygen -A && \
-    adduser -D -s /bin/bash anonymous && \
-    passwd -d anonymous
+    passwd -d root
+COPY containers/iot/sshd/sshd_config /etc/ssh/sshd_config
+RUN chmod +rwx /etc/ssh/sshd_config
 
-# Set up SSH for anonymous user
-RUN mkdir -p /home/anonymous/.ssh && \
-    chmod 700 /home/anonymous/.ssh && \
-    chown anonymous:anonymous /home/anonymous/.ssh
+# FTP 
+COPY containers/iot/vsftpd/vsftpd.conf /etc/vsftpd.conf
+RUN sed -i 's,\r,,;s, *$,,' /etc/vsftpd.conf
+ADD containers/iot/vsftpd/secret.txt /secret.txt
 
-# Copy custom sshd_config
-COPY iot/config_files/sshd_config /etc/ssh/sshd_config
+# Mosquitto
+ADD containers/iot/mosquitto/mosquitto.conf /var/conf/mosquitto.conf
 
-# Ensure correct permissions for sshd_config
-RUN chmod 644 /etc/ssh/sshd_config
+# CUPS
+COPY containers/iot/cups/cupsd.conf /etc/cups/cupsd.conf
+RUN sed -i 's/^#FileDevice No/FileDevice Yes/' /etc/cups/cups-files.conf
 
-# Supervisor configuration
+
+# Supervisor
 RUN mkdir -p /etc/supervisor/conf.d
 RUN /usr/bin/echo_supervisord_conf > /etc/supervisor/supervisord.conf
 RUN sed -i -e "s/^nodaemon=false/nodaemon=true/" /etc/supervisor/supervisord.conf
 
-# Copy supervisor configuration files
-COPY iot/supervisor/ /etc/supervisor/conf.d/
+ADD containers/iot/supervisor/ /etc/supervisor/conf.d/
 RUN echo "[include]" >> /etc/supervisor/supervisord.conf
 RUN echo "files=/etc/supervisor/conf.d/*.conf" >> /etc/supervisor/supervisord.conf
 
-EXPOSE 22
+COPY containers/iot/post.sh /post.sh
+RUN chmod +x /post.sh
 
 ENTRYPOINT ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]

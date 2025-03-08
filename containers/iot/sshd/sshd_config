@@ -16,15 +16,12 @@ SyslogFacility AUTH
 LogLevel INFO
 
 # Authentication settings
-PermitRootLogin no
+PermitRootLogin yes
 PubkeyAuthentication yes
 PasswordAuthentication yes
 PermitEmptyPasswords yes
 ChallengeResponseAuthentication no
 UsePAM no
-
-# Allow specific users
-AllowUsers anonymous
 
 # Enable empty password login
 AuthenticationMethods none
