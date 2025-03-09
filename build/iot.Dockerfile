@@ -1,23 +1,18 @@
 FROM alpine:latest
 
-RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
-    echo "https://dl-cdn.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositories && \
-    apk update --update-cache
+# Update repositories for Alpine 3.10
+RUN echo "https://dl-cdn.alpinelinux.org/alpine/v3.10/main" > /etc/apk/repositories && \
+    echo "https://dl-cdn.alpinelinux.org/alpine/v3.10/community" >> /etc/apk/repositories && \
+    apk update
 
-# Install obsolete versions
-RUN wget https://dl-cdn.alpinelinux.org/alpine/v3.10/main/x86_64/mosquitto-1.6.3-r0.apk && \
-    wget https://dl-cdn.alpinelinux.org/alpine/v3.10/main/x86_64/vsftpd-3.0.3-r6.apk && \
-    wget https://dl-cdn.alpinelinux.org/alpine/v3.10/main/x86_64/openssh-8.1_p1-r0.apk && \
-    wget https://dl-cdn.alpinelinux.org/alpine/v3.10/main/x86_64/openssh-server-8.1_p1-r0.apk && \
-    wget https://dl-cdn.alpinelinux.org/alpine/v3.10/main/x86_64/cups-2.2.12-r1.apk && \
-    wget https://dl-cdn.alpinelinux.org/alpine/v3.10/main/x86_64/busybox-extras-1.30.1-r5.apk && \
-    apk add --allow-untrusted \
-    mosquitto-1.6.3-r0.apk \
-    vsftpd-3.0.3-r6.apk \
-    openssh-8.1_p1-r0.apk \
-    openssh-server-8.1_p1-r0.apk \
-    cups-2.2.12-r1.apk \
-    busybox-extras-1.30.1-r5.apk
+# Install specific vulnerable package versions
+RUN apk add --no-cache --force-overwrite \
+    mosquitto=1.6.3-r0 \
+    vsftpd=3.0.3-r6 \
+    openssh=8.1_p1-r0 \
+    openssh-server=8.1_p1-r0 \
+    cups=2.2.12-r1 \
+    busybox-extras=1.30.1-r5
 
 RUN apk add --no-cache \
     sudo \
