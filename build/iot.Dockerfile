@@ -11,9 +11,7 @@ RUN apk add --no-cache --force-overwrite \
     openssh=8.1_p1-r0 \
     openssh-server=8.1_p1-r0 \
     cups=2.2.12-r1 \
-    busybox-extras=1.30.1-r5 \
-    live-media \
-    live-media-utils
+    busybox-extras=1.30.1-r5
 
 RUN apk add --no-cache \
     sudo \
