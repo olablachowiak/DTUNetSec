@@ -1,9 +1,8 @@
 FROM alpine:latest
 
-# Update repositories for Alpine 3.10
-RUN echo "https://dl-cdn.alpinelinux.org/alpine/v3.10/main" > /etc/apk/repositories && \
-    echo "https://dl-cdn.alpinelinux.org/alpine/v3.10/community" >> /etc/apk/repositories && \
-    apk update
+RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
+    echo "https://dl-cdn.alpinelinux.org/alpine/v3.10/main" >> /etc/apk/repositories && \
+    apk update --update-cache
 
 # Install specific vulnerable package versions
 RUN apk add --no-cache --force-overwrite \
@@ -45,17 +44,6 @@ ADD containers/iot/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
 # Telnet
 ADD containers/iot/inetd/inetd.conf /etc/inetd/inetd.conf
 
-# RTSP
-RUN mkdir -p /var/media/rtsp && \
-    wget -O /var/media/rtsp/sample.mp4 "http://distribution.bbb3d.renderfarming.net/video/mp4/bbb_sunflower_1080p_30fps_normal.mp4" && \
-    chmod -R 755 /var/media/rtsp
-WORKDIR /usr/local/bin
-RUN wget -O mediamtx.tar.gz "https://github.com/bluenviron/mediamtx/releases/download/v1.11.3/mediamtx_v1.11.3_linux_amd64.tar.gz" && \
-    tar -xzf mediamtx.tar.gz && \
-    rm mediamtx.tar.gz
-COPY containers/iot/rtsp/mediamtx.yml /etc/mediamtx.yml
-COPY containers/iot/rtsp/start-rtsp.sh /start-rtsp.sh
-RUN chmod +x /start-rtsp.sh
 
 # CUPS
 COPY containers/iot/cups/cupsd.conf /etc/cups/cupsd.conf
