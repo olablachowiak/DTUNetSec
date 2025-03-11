@@ -36,6 +36,6 @@ jobs:
             docker buildx build \
               --platform linux/amd64,linux/arm64 \
               --file "$file" \
-              --tag "${DOCKERHUB_USERNAME}/${name}-dtunetsec":latest \
+              --tag "${DOCKERHUB_USERNAME}/${name}-dtunetsec:latest" \
               --push .
           done
