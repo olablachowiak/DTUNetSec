@@ -27,6 +27,8 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build and push images
+        env:
+          DOCKERHUB_USERNAME: ${{vars.DOCKERHUB_USERNAME}}
         run: |
           for file in build/*.Dockerfile; do
             name=$(basename "$file" .Dockerfile)
