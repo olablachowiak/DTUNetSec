@@ -54,4 +54,6 @@ ADD containers/iot/supervisord.conf /etc/supervisor/supervisord.conf
 COPY containers/iot/post.sh /post.sh
 RUN chmod +x /post.sh
 
+EXPOSE 21 22 23 631 1883 5683
+
 ENTRYPOINT ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
