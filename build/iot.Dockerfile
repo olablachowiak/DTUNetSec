@@ -42,7 +42,6 @@ ADD containers/iot/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
 # Telnet
 ADD containers/iot/inetd/inetd.conf /etc/inetd/inetd.conf
 
-
 # CUPS
 COPY containers/iot/cups/cupsd.conf /etc/cups/cupsd.conf
 RUN sed -i 's/^#FileDevice No/FileDevice Yes/' /etc/cups/cups-files.conf

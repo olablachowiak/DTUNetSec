@@ -2,9 +2,6 @@
 
 Here you can find a `docker-compose` file to start all the required services and applications we are going to use throughout the Network Security course and its laboratory exercises.
 
-## Repository Structure
-
-
 ## Requirements
 
 Before cloning the repository and setting up the services, make sure you have the following tools installed: 
@@ -26,12 +23,16 @@ Make sure that `docker` is running.
 Then, compose up the containers from the root directory of the project.
 
 ```sh
-docker compose up --build -d
-```
+# build containers from remote. This should work in most cases
+./start.sh --lab <lab, e.g.: iot>
+# This one also works
+./start.sh iot
 
-> NOTE: If you are using a Macbook, you may need to use the following command instead:
->
-> `DOCKER_DEFAULT_PLATFORM=linux/amd64 docker compose up --build -d`
+# build from local files. Use this option if you are running into errors
+./start.sh --lab <lab, e.g.: iot> --local
+# this one works too!
+./start.sh iot --local
+```
 
 ### Check containers health
 

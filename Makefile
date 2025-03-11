@@ -2,12 +2,21 @@
 # https://github.com/kubernetes/kubernetes/blob/master/build/root/Makefile
 SHELL := /usr/bin/env bash -o errexit -o pipefail -o nounset
 
-.PHONY: start stop
-start-%:
-	docker compose --profile $* up -d --build
+PROFILE ?=
+LOCAL ?= false
+
+# Ensure PROFILE is provided
+ifeq ($(PROFILE),)
+$(error PROFILE is required. Usage: make run PROFILE=<profile_name> [LOCAL=true])
+endif
+
+# Define the command based on LOCAL flag
+ifeq ($(LOCAL),true)
+    COMPOSE_CMD = docker compose -f docker-compose.local.yaml --profile $(PROFILE) up  -d --build
+else
+    COMPOSE_CMD = docker compose -f docker-compose.yaml --profile $(PROFILE) up -d --build
+endif
+
+.PHONY: start
 start:
-	docker compose up -d --build
-stop-%:
-	docker compose --profile $* down
-stop:
-	docker compose down
+	@$(COMPOSE_CMD)
