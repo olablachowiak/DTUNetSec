@@ -14,7 +14,7 @@ services:
   defender:
     image: ryaben/defender-dtunetsec:latest
     platform: linux/amd64
-    profiles: [threat-detection, blue-team]
+    profiles: [threat-detection, authentication, blue-team]
     privileged: true
     cap_add:
       - NET_ADMIN

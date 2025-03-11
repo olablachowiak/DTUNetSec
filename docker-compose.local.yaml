@@ -16,7 +16,7 @@ services:
     build:
       context: .
       dockerfile: build/defender.Dockerfile
-    profiles: [threat-detection, blue-team]
+    profiles: [threat-detection, authentication, blue-team]
     privileged: true
     cap_add:
       - NET_ADMIN
