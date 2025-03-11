@@ -6,7 +6,6 @@ services:
       dockerfile: build/kali.Dockerfile
     ports:
       - "127.0.0.1:6901:6901"
-      - "127.0.0.1:1443:1443"
     environment:
       VNC_PW: "password"
     cap_add:
@@ -18,9 +17,6 @@ services:
       context: .
       dockerfile: build/defender.Dockerfile
     profiles: [threat-detection, blue-team]
-    ports:
-      - "127.0.0.1:2223:22"
-      - "127.0.0.1:8080:80"
     privileged: true
     cap_add:
       - NET_ADMIN
@@ -31,21 +27,10 @@ services:
       context: .
       dockerfile: build/iot.Dockerfile
     profiles: [iot]
-    ports:
-      - "127.0.0.1:2020:20" # FTP
-      - "127.0.0.1:2121:21" # FTP
-      - "127.0.0.1:2222:22" # SSH
-      - "127.0.0.1:2323:23" # Telnet
-      - "127.0.0.1:1554:554" # RTSP
-      - "127.0.0.1:1631:631" # IPP
-      - "127.0.0.1:1883:1883" # MQTT
-      - "127.0.0.1:5683:5683/udp" # CoAP
 
   cowrie:
     image: cowrie/cowrie
     profiles: [threat-detection]
-    ports:
-      - "127.0.0.1:2222:2222"
 
   # Used for the "11 - Red team" lab
   juice-shop:
