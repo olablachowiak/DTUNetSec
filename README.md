@@ -24,14 +24,14 @@ Then, compose up the containers from the root directory of the project.
 
 ```sh
 # build containers from remote. This should work in most cases
-./start.sh --lab <lab, e.g.: iot>
+./run.sh --lab <lab, e.g.: iot>
 # This one also works
-./start.sh iot
+./run.sh iot
 
 # build from local files. Use this option if you are running into errors
-./start.sh --lab <lab, e.g.: iot> --local
+./run.sh --lab <lab, e.g.: iot> --local
 # this one works too!
-./start.sh iot --local
+./run.sh iot --local
 ```
 
 ### Check containers health
