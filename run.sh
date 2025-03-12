@@ -7,6 +7,8 @@ PROFILE=""
 # Help message
 usage() {
     echo "Usage: $0 <lab> [--local] or $0 --lab <lab> [--local]"
+    echo ""
+    echo "Arguments:"
     echo "  <lab>   (Required) Lab name to use"
     echo "  --local (Optional) Run with local compose file"
     exit 1
