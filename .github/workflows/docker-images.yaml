@@ -2,8 +2,8 @@ name: ci
 
 on:
   push:
-    paths-ignore:
-      - "**.md"
+    paths:
+      - "build/*.Dockerfile"
     branches:
       - "main"
 
