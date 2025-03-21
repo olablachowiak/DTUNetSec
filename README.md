@@ -19,6 +19,7 @@ Threat Detection | threat-detection
 Blue Team | blue-team
 IoT Security | iot
 WIFI Security | wifi
+Privacy | privacy
 Red Team | red-team
 
 <p>Table 1: Lab names and codes to run containers </p>
