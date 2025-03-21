@@ -19,6 +19,7 @@ Threat Detection | threat-detection
 Blue Team | blue-team
 IoT Security | iot
 WIFI Security | wifi
+Privacy | privacy
 Red Team | red-team
 
 <p>Table 1: Lab names and codes to run containers </p>
@@ -75,3 +76,9 @@ The codes for each lab are shown in Table 1.
     > ```sh
     > sudo -E wireshark
     > ```
+    
+    > **NOTE 3:** to run `dnscat` server in `kali`, you need to run: 
+    > ```sh
+    > ruby material/dnscat2/server/dnscat2.rb <args>
+    > ```
+    
