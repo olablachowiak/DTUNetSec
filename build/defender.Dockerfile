@@ -20,6 +20,8 @@ RUN apk add --no-cache \
   php php-apache2 php-common php-session \
   # Supervisor
   supervisor \
+  # dnscat
+  build-base \
   && rm -rf /var/cache/apk/*
 
 RUN curl -L https://github.com/CISOfy/lynis/archive/refs/heads/master.tar.gz -o lynis.tar.gz && \
@@ -46,6 +48,14 @@ RUN sed -i -e "s/^nodaemon=false/nodaemon=true/" /etc/supervisor/supervisord.con
 ADD containers/defender/supervisor/ /etc/supervisor/conf.d/
 RUN echo "[include]" >> /etc/supervisor/supervisord.conf
 RUN echo "files=/etc/supervisor/conf.d/*.conf" >> /etc/supervisor/supervisord.conf
+
+# dnscat
+RUN curl -L https://github.com/iagox86/dnscat2/archive/refs/heads/master.tar.gz -o dnscat2.tar.gz && \
+tar -xzvf dnscat2.tar.gz && rm dnscat2.tar.gz
+WORKDIR dnscat2-master
+RUN make
+RUN sudo ln -s /dnscat2-master/client/dnscat /usr/local/bin/dnscat2-client
+WORKDIR /
 
 # Expose ports (Note: this does nothing)
 EXPOSE 22 80
