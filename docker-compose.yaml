@@ -3,6 +3,7 @@ services:
   kali:
     image: ryaben/kali-dtunetsec:latest
     platform: linux/amd64
+    profiles: [bootcamp]
     ports:
       - "127.0.0.1:6901:6901"
     environment:
