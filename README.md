@@ -75,3 +75,9 @@ The codes for each lab are shown in Table 1.
     > ```sh
     > sudo -E wireshark
     > ```
+    
+    > **NOTE 3:** to run `dnscat` server in `kali`, you need to run: 
+    > ```sh
+    > ruby material/dnscat2/server/dnscat2.rb <args>
+    > ```
+    
