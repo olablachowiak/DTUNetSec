@@ -51,8 +51,9 @@ RUN echo "files=/etc/supervisor/conf.d/*.conf" >> /etc/supervisor/supervisord.co
 
 # dnscat
 RUN curl -L https://github.com/iagox86/dnscat2/archive/refs/heads/master.tar.gz -o dnscat2.tar.gz && \
-tar -xzvf dnscat2.tar.gz && rm dnscat2.tar.gz
-WORKDIR dnscat2-master
+  tar -xzvf dnscat2.tar.gz && \
+  rm dnscat2.tar.gz
+WORKDIR /dnscat2-master
 RUN make
 RUN sudo ln -s /dnscat2-master/client/dnscat /usr/local/bin/dnscat2-client
 WORKDIR /
