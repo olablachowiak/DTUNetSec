@@ -1,8 +1,9 @@
 ---
 services:
   kali:
-    image: ryaben/kali-dtunetsec:latest
-    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: build/kali.Dockerfile
     ports:
       - "127.0.0.1:6901:6901"
     environment:
@@ -10,11 +11,11 @@ services:
     cap_add:
       - NET_ADMIN
       - NET_RAW
-    restart: always
 
   defender:
-    image: ryaben/defender-dtunetsec:latest
-    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: build/defender.Dockerfile
     profiles: [threat-detection, authentication, blue-team, privacy]
     privileged: true
     cap_add:
@@ -22,8 +23,9 @@ services:
       - NET_RAW
 
   iot:
-    image: ryaben/iot-dtunetsec:latest
-    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: build/iot.Dockerfile
     profiles: [iot]
 
   cowrie:

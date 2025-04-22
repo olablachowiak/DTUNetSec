@@ -42,7 +42,6 @@ ADD containers/iot/mosquitto/mosquitto.conf /etc/mosquitto/mosquitto.conf
 # Telnet
 ADD containers/iot/inetd/inetd.conf /etc/inetd/inetd.conf
 
-
 # CUPS
 COPY containers/iot/cups/cupsd.conf /etc/cups/cupsd.conf
 RUN sed -i 's/^#FileDevice No/FileDevice Yes/' /etc/cups/cups-files.conf
@@ -54,5 +53,7 @@ ADD containers/iot/supervisord.conf /etc/supervisor/supervisord.conf
 
 COPY containers/iot/post.sh /post.sh
 RUN chmod +x /post.sh
+
+EXPOSE 21 22 23 631 1883 5683
 
 ENTRYPOINT ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]

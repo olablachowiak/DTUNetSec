@@ -1,64 +1,84 @@
-# 02233 - Network Security (2025)
+# 02233 - Network Security
 
-Here you can find a `docker-compose` file to start all the required services and applications we are going to use throughout the Network Security course and its laboratory exercises.
+This repository includes the material used throughout the Network Security course at DTU.
+Make sure you have the following tools installed: 
 
-## Repository Structure
-
-
-## Requirements
-
-Before cloning the repository and setting up the services, make sure you have the following tools installed: 
-
-- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - [Docker](https://docs.docker.com/engine/install/)
+- On Windows only: [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install)
 
-## Steps
+## Quick Setup
 
-### Clone GitHub repository
+<div>
+<center>
 
-```sh
-git clone https://github.com/RicYaben/DTUNetSec.git
-```
+| Lab name | Code |
+----- | --- |
+Authentication | authentication
+TLS | tls
+Threat Detection | threat-detection
+Blue Team | blue-team
+IoT Security | iot
+WIFI Security | wifi
+Privacy | privacy
+Red Team | red-team
 
-### Setup the services
+<p>Table 1: Lab names and codes to run containers </p>
+</center>
+</div>
 
-Make sure that `docker` is running.
-Then, compose up the containers from the root directory of the project.
-
-```sh
-docker compose up --build -d
-```
-
-> NOTE: If you are using a Macbook, you may need to use the following command instead:
+> **NOTE 1:** Make sure **Docker** is running.
 >
-> `DOCKER_DEFAULT_PLATFORM=linux/amd64 docker compose up --build -d`
+> **NOTE 2:** If you are using **Windows**, make sure you have installed and working [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install). You can choose Ubuntu for the subsystem.
+>
+> **NOTE 3:** If you are using a **Macbook** use the `--local` flag with the runner script.
 
-### Check containers health
+1.  From the root directory, execute the `run.sh` script followed by the name of the lab. 
+If you are using a **Macbook**, please use the `--local` flag as well. 
+The codes for each lab are shown in Table 1.
 
-To check the health of your containers, do:
+    **Usage:**
 
-```sh
-# Lists the running containers
-docker ps 
-# See the logs of the specified container
-docker logs <container-name>
-```
+    ````sh
+    Usage: ./run.sh <lab> [--local] or ./run.sh --lab <lab> [--local]
 
-### Login to Kali environment
+    Arguments:
+    <lab>   (Required) Lab name to use
+    --local (Optional) Run with local compose file
+    ````
 
-For the kali environment, open `https://localhost:6901/` in the browser of your choice, and continue with credentials:
+    **Example:**
 
-```sh
-User: kasm_user
-Password: password
-```
+    ```sh
+    # build containers from remote. This should work in most cases
+    bash ./run.sh --lab iot
+    # This one also works
+    bash ./run.sh iot
 
-For later labs, to use `bloodhound`, you have to start the `neo4j` service:
+    # build from local files. Use this option if you are running into errors
+    bash ./run.sh --lab iot --local
+    # this one works too!
+    bash ./run.sh iot --local
+    ```
 
-```sh
-sudo neo4j start
-```
+2. To access the **kali** container, open `https://localhost:6901/` in your browser and use the following credentials:
 
-### Additional docker commands
+    ```sh
+    User: kasm_user
+    Password: password
+    ```
 
-For additional docker commands check out the [cheatsheet](https://dockerlabs.collabnix.com/docker/cheatsheet/).
+    > **NOTE 1:** to use `bloodhound`, you have to start the `neo4j` service:
+    > ```sh
+    > sudo neo4j start
+    > ```
+
+    > **NOTE 2:** to use `wireshark`, you need to run it as sudo with the current environment
+    > ```sh
+    > sudo -E wireshark
+    > ```
+    
+    > **NOTE 3:** to run `dnscat` server in `kali`, you need to run: 
+    > ```sh
+    > ruby material/dnscat2/server/dnscat2.rb <args>
+    > ```
+    
